@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Happy Birthday!</title>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Fredoka:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg1:#ffd6e8;--bg2:#ffb3d1;--bg3:#ff8fb8;
+  --key:rgba(255,255,255,.55);--key-hover:rgba(255,255,255,.85);
+  --text:#a1245b;--accent:#ff4d94;--blob:rgba(255,255,255,.35);--paper:#fff8fb;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){--bg1:#4a1030;--bg2:#6b1a47;--bg3:#8c2560;--key:rgba(255,255,255,.14);--key-hover:rgba(255,255,255,.28);--text:#ffd1e6;--accent:#ff7ab2;--blob:rgba(255,120,180,.18);--paper:#3a0e27}
+}
+:root[data-theme="dark"]{--bg1:#4a1030;--bg2:#6b1a47;--bg3:#8c2560;--key:rgba(255,255,255,.14);--key-hover:rgba(255,255,255,.28);--text:#ffd1e6;--accent:#ff7ab2;--blob:rgba(255,120,180,.18);--paper:#3a0e27}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;margin:0}
+body{font-family:'Quicksand',system-ui,sans-serif;color:var(--text);background:linear-gradient(160deg,var(--bg1),var(--bg2) 55%,var(--bg3));overflow:hidden;position:relative}
+.blob{position:fixed;border-radius:50%;background:var(--blob);animation:float 9s ease-in-out infinite;pointer-events:none}
+.b1{width:220px;height:220px;top:-60px;left:-60px}
+.b2{width:160px;height:160px;bottom:8%;right:-40px;animation-delay:-3s}
+.b3{width:90px;height:90px;top:30%;right:12%;animation-delay:-6s}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-22px)}}
+.balloon{position:fixed;font-size:2.4rem;bottom:-60px;animation:rise 12s linear infinite;pointer-events:none;opacity:.85}
+@keyframes rise{to{transform:translateY(-120vh) rotate(12deg)}}
+.screen{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transform:scale(.92);transition:opacity .7s,transform .7s}
+.screen.show{opacity:1;pointer-events:auto;transform:scale(1)}
+h1{font-family:'Fredoka','Quicksand',system-ui,sans-serif;font-weight:600;font-size:2.2rem;margin:0 0 6px;text-align:center}
+.sub{margin:0 0 24px;font-weight:600;opacity:.85;text-align:center}
+.dots{display:flex;gap:16px;margin-bottom:30px}
+.dot{width:18px;height:18px;border-radius:50%;border:2.5px solid var(--accent);transition:.2s}
+.dot.on{background:var(--accent);transform:scale(1.15)}
+.dots.shake{animation:shake .45s}
+.dots.shake .dot{border-color:#e0245e;background:#e0245e}
+@keyframes shake{20%,60%{transform:translateX(-12px)}40%,80%{transform:translateX(12px)}}
+.pad{display:grid;grid-template-columns:repeat(3,72px);gap:16px}
+.k{width:72px;height:72px;border-radius:50%;border:2px solid rgba(255,255,255,.7);background:var(--key);color:var(--text);font:700 1.6rem 'Quicksand',sans-serif;cursor:pointer;backdrop-filter:blur(6px);box-shadow:0 6px 18px rgba(255,77,148,.25);transition:transform .12s,background .2s}
+.k:hover{background:var(--key-hover)}
+.k:active{transform:scale(.88);background:var(--accent);color:#fff}
+.k.ghost{background:transparent;border-color:transparent;box-shadow:none;font-size:1.3rem}
+.hint{margin-top:22px;font-size:.85rem;opacity:.75;min-height:1.2em}
+/* cake */
+.cake{width:min(320px,80vw);height:auto;overflow:visible}
+.flame{transform-box:fill-box;transform-origin:50% 100%;animation:flick .25s ease-in-out infinite alternate;transition:opacity .3s}
+.flame:nth-of-type(2){animation-delay:-.1s}
+@keyframes flick{from{transform:scale(1,1) rotate(-3deg)}to{transform:scale(.9,1.12) rotate(3deg)}}
+.msg{font-weight:700;font-size:1.15rem;margin:18px 0 10px;text-align:center;min-height:1.5em}
+.btn{padding:12px 26px;border-radius:30px;border:2px solid rgba(255,255,255,.85);background:var(--key);color:var(--text);font:700 1rem 'Quicksand',sans-serif;cursor:pointer;box-shadow:0 6px 18px rgba(255,77,148,.25);margin:4px}
+.btn.main{background:var(--accent);color:#fff}
+.meter{width:200px;height:10px;border-radius:10px;background:var(--key);overflow:hidden;margin-top:8px}
+.meter i{display:block;height:100%;width:0;background:var(--accent);transition:width .1s}
+.smoke{position:absolute;font-size:1.6rem;opacity:0;pointer-events:none}
+/* gift */
+.gift{position:relative;width:190px;height:190px;cursor:pointer;animation:bob 2s ease-in-out infinite}
+.gift.open{animation:none}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.box{position:absolute;z-index:1;bottom:0;left:10px;right:10px;height:120px;background:linear-gradient(#ff7eb3,#ff4d94);border-radius:8px;box-shadow:0 12px 24px rgba(255,77,148,.35)}
+.box::after,.lid::after{content:"";position:absolute;top:0;bottom:0;left:50%;width:26px;margin-left:-13px;background:#fff3b0}
+.lid{position:absolute;bottom:112px;left:0;right:0;height:42px;background:linear-gradient(#ff9cc6,#ff6aa5);border-radius:8px;transition:transform .8s cubic-bezier(.3,1.6,.5,1);z-index:2}
+.bow{position:absolute;top:-30px;left:50%;margin-left:-22px;font-size:2.6rem;z-index:3}
+.gift.open .lid{transform:translateY(-90px) rotate(-14deg)}
+.letter{position:absolute;bottom:60px;left:35px;right:35px;height:90px;background:#fff;border-radius:6px;transition:transform .9s .3s;z-index:0;display:flex;align-items:center;justify-content:center;font-size:2rem}
+.gift.open .letter{transform:translateY(-70px)}
+/* letter overlay */
+.paper{width:min(420px,90vw);max-height:78vh;overflow:auto;background:var(--paper);border-radius:18px;padding:30px 26px;box-shadow:0 20px 50px rgba(160,30,90,.35);border:2px solid rgba(255,255,255,.8)}
+.paper h2{font-family:'Fredoka','Quicksand',system-ui,sans-serif;font-weight:600;margin:0 0 14px;font-size:1.6rem}
+.paper p{line-height:1.65;font-weight:600;margin:0 0 12px}
+.conf{position:fixed;top:-20px;width:10px;height:14px;pointer-events:none;animation:fall linear forwards;z-index:50}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+</style>
+</head>
+<body>
+
+
+
+
+
+<main class="screen show" id="lock">
+  <h1>Happy Birthday! 🎂</h1>
+  <p class="sub">HI CHY! Hulaan mo yung password :> madali lang wag mo ioverthink promise ♡</p>
+  <div class="dots" id="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+  <div class="pad" id="pad"></div>
+  <div class="hint" id="hint"></div>
+</main>
+
+<section class="screen" id="cakeScr">
+  <h1>make a wish!</h1>
+  <svg class="cake" viewBox="0 0 300 270" aria-label="Birthday cake with lit candles">
+    <ellipse cx="150" cy="248" rx="140" ry="16" fill="#ffd9e8" stroke="#fff" stroke-width="3"/>
+    <rect x="40" y="170" width="220" height="76" rx="14" fill="#ff9cc6"/>
+    <path d="M40 184q0-14 14-14h192q14 0 14 14v6q-16 16-32 0t-32 0-32 0-32 0-32 0-32 0-32 0z" fill="#fff"/>
+    <rect x="75" y="110" width="150" height="64" rx="14" fill="#ffb3d1"/>
+    <path d="M75 124q0-14 14-14h122q14 0 14 14v4q-15 15-30 0t-30 0-30 0-30 0-30 0z" fill="#fff"/>
+    <circle cx="70" cy="215" r="6" fill="#fff3b0"/><circle cx="125" cy="222" r="6" fill="#fff"/><circle cx="185" cy="215" r="6" fill="#fff3b0"/><circle cx="235" cy="222" r="6" fill="#fff"/>
+    <circle cx="105" cy="150" r="5" fill="#ff4d94"/><circle cx="150" cy="156" r="5" fill="#fff3b0"/><circle cx="195" cy="150" r="5" fill="#ff4d94"/>
+    <g id="candles">
+      <rect x="107" y="72" width="12" height="40" rx="3" fill="#fff"/><rect x="107" y="82" width="12" height="6" fill="#ff4d94"/><rect x="107" y="96" width="12" height="6" fill="#ff4d94"/>
+      <rect x="144" y="66" width="12" height="46" rx="3" fill="#fff3b0"/><rect x="144" y="78" width="12" height="6" fill="#ff4d94"/><rect x="144" y="94" width="12" height="6" fill="#ff4d94"/>
+      <rect x="181" y="72" width="12" height="40" rx="3" fill="#fff"/><rect x="181" y="82" width="12" height="6" fill="#ff4d94"/><rect x="181" y="96" width="12" height="6" fill="#ff4d94"/>
+      <path class="flame" d="M113 70c-9-10-6-20 0-28 6 8 9 18 0 28z" fill="#ffb347"/>
+      <path class="flame" d="M150 64c-9-10-6-20 0-28 6 8 9 18 0 28z" fill="#ffb347"/>
+      <path class="flame" d="M187 70c-9-10-6-20 0-28 6 8 9 18 0 28z" fill="#ffb347"/>
+    </g>
+  </svg>
+  <div class="msg" id="msg">di kita nabilhan ng totoong cake kaya ito muna, hipan mo :></div>
+  <div class="meter"><i id="bar"></i></div>
+  <div style="margin-top:12px">
+    <button class="btn main" id="micBtn">🎤 Enable mic</button>
+    <button class="btn" id="tapBtn">Tap to blow instead</button>
+  </div>
+</section>
+
+<section class="screen" id="giftScr">
+  <h1>ready ka na umiyak uli?</h1>
+  <p class="sub" id="giftSub">tap the box to open it</p>
+  <div class="gift" id="gift"><div class="letter">💌</div><div class="box"></div><div class="lid"><span class="bow">🎀</span></div></div>
+</section>
+
+<section class="screen" id="letterScr">
+  <div class="paper">
+    <h2>HI CHY </h2>
+    <p>HABADUU!!! 17 KA NA WTF U OLD HA</p>
+    <p>tumatanda ka na pero you're still the same loving and caring person i know.</p>
+    <p>wag na wag mong kakalimutan yung lagi kong bilin sayo ha. ALAGAAN ANG SARILIII!!! </p>
+    <p>please please please by sabrina carpenter wag mong papabayaan sarili mooooo</p>
+    <p>isusumpa ko yang mga kaklase mo at yung school mo e ANG LALA LANG TALAGA HA</p>
+    <p>pero anyway, don't pressure yourself too much din. alam kong over achiever ka at lahat lahat pero you'll never be a failure kahit ano mangyari kasi grabe palagi yung effort na binibigay mo!!!</p>
+    <p> kung kailangan mong umiyak, umiyak ka lang. kung kailangan mong magalit, magalit ka lang. damdamin mo lang lahat hanggang sa mawala.</p>
+    <p> i'm happy to see rin that you're surrounded with loving and amazing people to take care of you rin :> surround yourself lang with positive energy palaggiii </p>
+    <p>alam kong sobrang busy ko palagi pero hope u know na i always pray for you and your health all the time.</p>
+    <p> kapag bumibigat na uli ang lahat, takbo ka lang sa dms ko at ilabas mo lahat don ha </p>
+    <p> i'm grateful komportable ka pa sakin at pinagkakatiwalaan mo parin ako kahit na hindi ako masyadong active :/ </p>
+    <p> babawi ako sayo malala kapag nagkita na tayo LEGIT AT BAWAL KANG TUMANGGI over ka na sa libre sakin pls ako naman</p>
+    <p> the day na magkikita tayo ay sisiguraduhin kong yayakapin kita ng mahigpit.</p>
+    <p> okay tama na di na kita papaiyakin ng sobra ngayon hehe okay na yung mga nakaraang taon may awa pa naman aq sayo</p>
+    <p> I LOVE YOU ALWAYS TANDAAN MO YAAANNNN rooting for you always!!! </p>
+    <p>bumalik na rin ako sa ml btw kaya baka naman laro tayo soon hehe </p>
+    <p>at sana makahanap na ko ng time para makacall ka uli, sori talaga ToT (pasabi rin hi kay dylan) </p>
+  </div>
+  <button class="btn" id="replay" style="margin-top:16px"> restart! </button>
+</section>
+
+<script>
+const $=id=>document.getElementById(id);
+const screens=['lock','cakeScr','giftScr','letterScr'];
+function go(id){screens.forEach(s=>$(s).classList.toggle('show',s===id))}
+function confetti(n=60){
+  const c=['#ff4d94','#ffd1e6','#fff3b0','#ff9cc6','#ffffff','#c9a0ff'];
+  for(let i=0;i<n;i++){
+    const e=document.createElement('i');e.className='conf';
+    e.style.left=Math.random()*100+'vw';e.style.background=c[i%c.length];
+    e.style.animationDuration=(2+Math.random()*2.5)+'s';e.style.animationDelay=Math.random()*.6+'s';
+    document.body.appendChild(e);setTimeout(()=>e.remove(),5500);
+  }
+}
+/* lock */
+const CODE="1023";let entered="";
+const dots=[...document.querySelectorAll('.dot')],hint=$('hint'),dotsBox=$('dots');
+["1","2","3","4","5","6","7","8","9","","0","⌫"].forEach(v=>{
+  const b=document.createElement('button');
+  b.className='k'+(v===""||v==="⌫"?' ghost':'');b.textContent=v;
+  if(v==="")b.style.visibility='hidden';else b.onclick=()=>press(v);
+  $('pad').appendChild(b);
+});
+const render=()=>dots.forEach((d,i)=>d.classList.toggle('on',i<entered.length));
+function press(v){
+  if(!$('lock').classList.contains('show'))return;
+  if(v==="⌫"){entered=entered.slice(0,-1);hint.textContent="";render();return}
+  if(entered.length>=4)return;
+  entered+=v;render();
+  if(entered.length===4)setTimeout(check,200);
+}
+function check(){
+  if(entered===CODE){confetti();go('cakeScr')}
+  else{
+    dotsBox.classList.add('shake');hint.textContent="hehe mali CLUE: ano ba ngayon";
+    setTimeout(()=>{dotsBox.classList.remove('shake');entered="";render()},500);
+  }
+}
+document.addEventListener('keydown',e=>{
+  if(/^[0-9]$/.test(e.key))press(e.key);else if(e.key==="Backspace")press("⌫");
+});
+/* cake + mic */
+const flames=[...document.querySelectorAll('.flame')];
+let stream,actx,an,data,listening=false,progress=0,last=0,done=false;
+const NEED=0.7;
+function setFlames(p){
+  const s=Math.max(0,1-p/NEED);
+  flames.forEach(f=>{f.style.opacity=s;f.style.scale=(0.4+0.6*s)});
+}
+async function startMic(){
+  try{
+    stream=await navigator.mediaDevices.getUserMedia({audio:true});
+    actx=new (window.AudioContext||window.webkitAudioContext)();
+    const src=actx.createMediaStreamSource(stream);
+    an=actx.createAnalyser();an.fftSize=512;src.connect(an);
+    data=new Uint8Array(an.fftSize);listening=true;last=performance.now();
+    $('msg').textContent="Now blow into your mic! 💨";$('micBtn').style.display='none';
+    loop();
+  }catch(e){
+    $('msg').textContent="Mic isn’t available here, so tap the button instead";
+  }
+}
+function loop(){
+  if(!listening||done)return;
+  const now=performance.now(),dt=(now-last)/1000;last=now;
+  an.getByteTimeDomainData(data);
+  let sum=0;for(const v of data){const x=(v-128)/128;sum+=x*x}
+  const rms=Math.sqrt(sum/data.length);
+  $('bar').style.width=Math.min(100,rms*500)+'%';
+  if(rms>0.12)progress+=dt;else progress=Math.max(0,progress-dt*.6);
+  setFlames(progress);
+  if(progress>=NEED)blowOut();
+  requestAnimationFrame(loop);
+}
+function blowOut(){
+  if(done)return;done=true;listening=false;
+  if(stream)stream.getTracks().forEach(t=>t.stop());
+  if(actx)actx.close();
+  flames.forEach(f=>{f.style.opacity=0});
+  $('bar').style.width='0';
+  $('msg').textContent="YAYYYY";
+  confetti(80);
+  setTimeout(()=>go('giftScr'),2000);
+}
+$('micBtn').onclick=startMic;
+$('tapBtn').onclick=()=>{
+  if(done)return;
+  let p=0;const t=setInterval(()=>{p+=.1;setFlames(p);if(p>=NEED){clearInterval(t);blowOut()}},60);
+};
+/* gift */
+$('gift').onclick=()=>{
+  const g=$('gift');if(g.classList.contains('open'))return;
+  g.classList.add('open');$('giftSub').textContent="for you ♡";confetti(50);
+  setTimeout(()=>go('letterScr'),1900);
+};
+$('replay').onclick=()=>{
+  done=false;progress=0;entered="";render();hint.textContent="";
+  $('gift').classList.remove('open');$('giftSub').textContent="tap the box to open it";
+  $('msg').textContent="Tap below, then blow into your mic 💨";$('micBtn').style.display='';
+  flames.forEach(f=>{f.style.opacity=1;f.style.scale=1});
+  go('lock');
+};
+</script>
+</body>
+</html>
